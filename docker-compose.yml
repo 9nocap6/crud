@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:13.8-alpine
+    container_name: db
+    ports:
+      - "6541:5432"
+    environment:
+      - POSTGRES_DB=crud_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=iamroot
