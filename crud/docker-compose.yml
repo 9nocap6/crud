@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  core-service:
+    build: core-service
+    container_name: server
+    ports:
+      - "9090:9090"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/crud_db
+  api-gateway:
+    build: api-gateway
+    container_name: gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - core-service
+    environment:
+      - CORE-SERVICE_URL=http://server:9090
+  db:
+    image: postgres:13.8-alpine
+    container_name: db
+    ports:
+      - "6541:5432"
+    environment:
+      - POSTGRES_DB=crud_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=iamroot
